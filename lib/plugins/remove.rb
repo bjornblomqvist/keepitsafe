@@ -39,6 +39,25 @@ module BackupPlugins
      end
    end
    
+   def cleanup
+     backup.remove(backup.run_cmd('ls -m ~/backups/').strip.split(/,\s/).map{|path| "~/backups/#{path}" }) do |backups|
+
+       # First backup of each month 1 years back
+       months = backup.keep_first_each_month(backups,1.years.ago)
+
+       # First backup of each week 2 months back
+       weeks = backup.keep_first_each_week(backups,1.months.ago)
+
+       # First backup of each day 1 week back
+       days = backup.keep_first_each_day(backups,7.days.ago)
+
+       # All backups during the last 24 hours
+       all = backup.keep_all(backups,1.day.ago)
+
+       all + days + weeks + months
+     end 
+   end
+   
    def keep_first_each_month backups,time_back = 1.year.ago
      months = {}
      backups.sort.each do |time|
