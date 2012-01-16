@@ -5,7 +5,7 @@ class ErrorMail
   
   def self.setup from = ENV['USER'],to = "root",mail_options = {}
     
-    Backup.on_error do |backup,options|
+    Keepitsafe.on_error do |backup,options|
 
       mail = Mail.new
       mail.from from

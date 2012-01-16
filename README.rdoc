@@ -1,6 +1,6 @@
 = keepitsafe
 
-Description goes here.
+A Gem for simple creation of backup scripts
 
 == Contributing to keepitsafe
  

@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "keepitsafe"
   gem.homepage = "http://github.com/bjornblomqvist/keepitsafe"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A Gem for simple creation of backup scripts}
+  gem.description = %Q{A Gem for simple creation of backup scripts}
   gem.email = "darwin.git@marianna.se"
   gem.authors = ["Darwin"]
   # dependencies defined in Gemfile
