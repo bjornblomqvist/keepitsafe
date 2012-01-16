@@ -40,7 +40,7 @@ module BackupPlugins
    end
    
    def remove_old_backups
-     backup.remove(backup.run_cmd('ls -m ~/backups/').strip.split(/,\s/).map{|path| "~/backups/#{path}" }) do |backups|
+     remove(backup.run_cmd('ls -m ~/backups/').strip.split(/,\s/).map{|path| "~/backups/#{path}" }) do |backups|
 
        # First backup of each month 1 years back
        months = backup.keep_first_each_month(backups,1.years.ago)
