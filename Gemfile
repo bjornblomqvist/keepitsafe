@@ -1,6 +1,9 @@
 source "http://rubygems.org"
 
 gem "activesupport"
+gem 'net-ssh'
+gem 'net-scp'
+gem 'net-sftp'
 
 group :development do
   gem "rspec", "~> 2.3.0"

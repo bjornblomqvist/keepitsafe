@@ -20,6 +20,11 @@ GEM
       rake
     json (1.6.5)
     multi_json (1.0.4)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.2.1)
     rake (0.9.2.2)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
@@ -39,4 +44,7 @@ DEPENDENCIES
   bundler (~> 1.0.0)
   cucumber
   jeweler (~> 1.6.4)
+  net-scp
+  net-sftp
+  net-ssh
   rspec (~> 2.3.0)
