@@ -4,6 +4,8 @@ gem "activesupport"
 gem 'net-ssh'
 gem 'net-scp'
 gem 'net-sftp'
+gem 'i18n'
+gem 'mail'
 
 group :development do
   gem "rspec", "~> 2.3.0"
