@@ -1,6 +1,14 @@
 = keepitsafe
 
-A Gem for simple creation of backup scripts
+A Gem for simple creation of backup scripts.
+
+  The basics.
+
+  - Backups can be handled and configured from a central place
+  - Backups are put in simple to understand location (~/backups/#{server_domain_name}/#{timestamp}/)
+  - Files keep there path as where they where on the server (/var/uploads/dummy.jpg -> ~/backups/#{server_domain_name}/#{timestamp}/var/uploads/dummy.jpg)
+  - When coping to another server the backups are put in the same place (~/backups/#{server_domain_name}/#{timestamp}/)
+  - Easy to understand, easy to extend
 
 == Contributing to keepitsafe
  
