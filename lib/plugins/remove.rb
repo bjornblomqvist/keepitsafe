@@ -39,7 +39,7 @@ module BackupPlugins
      end
    end
    
-   def make_same_space
+   def remove_old_backups
      backup.remove(backup.run_cmd('ls -m ~/backups/').strip.split(/,\s/).map{|path| "~/backups/#{path}" }) do |backups|
 
        # First backup of each month 1 years back
