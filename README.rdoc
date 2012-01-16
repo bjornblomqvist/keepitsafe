@@ -11,6 +11,10 @@ A Gem for simple creation of backup scripts.
 * Easy to understand, easy to extend
 * Good enough defaults
 
+== How to use
+
+Look in the example dir
+
 == Contributing to keepitsafe
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
