@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "keepitsafe"
-  s.version = "0.1.7"
+  s.version = "0.1.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Darwin"]
-  s.date = "2012-01-16"
+  s.date = "2012-01-20"
   s.description = "A Gem for simple creation of backup scripts"
   s.email = "darwin.git@marianna.se"
   s.extra_rdoc_files = [
@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/bjornblomqvist/keepitsafe"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "A Gem for simple creation of backup scripts"
 
   if s.respond_to? :specification_version then
