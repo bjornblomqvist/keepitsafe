@@ -65,10 +65,13 @@ class Keepitsafe
     (run_cmd("ls #{path}") || '').match(/No such file or directory/).nil?
   end
   
-  def upload src,target
+  def upload src,target,create_target_dir = false
     src = run_cmd("echo #{src}").strip # expand "~/"
     target = `echo #{target}`.strip # expand "~/"
     puts "local:#{src} => remote:#{target}"
+    
+    run_cmd("mkdir -p #{target.end_with?("/") ? target : File.dirname(target)}" ) if create_target_dir
+    
     if on_localhost?
       `cp -a #{src} #{target}`
     else
@@ -76,10 +79,30 @@ class Keepitsafe
     end
   end
   
-  def download src,target
+  def download_backup
+    
+    path = if !run_cmd("ls #{tar_path}").match(/No such file or directory/)
+       tar_path
+     elsif !run_cmd("ls #{tar_gz_path}").match(/No such file or directory/)
+       tar_gz_path
+     elsif !run_cmd("ls #{backup_target_dir}").match(/No such file or directory/)
+       backup_target_dir
+     else  
+       raise "This code sucks as we cant find a file to transfer =("
+     end
+     
+     puts "\n\t backup.download_backup()\n\n"
+     download(path,path,true)
+    
+  end
+  
+  def download src,target,create_target_dir = false
     src = run_cmd("echo #{src}").strip # expand "~/"
     target = `echo #{target}`.strip # expand "~/"
     puts "remote:#{src} => local:#{target}"
+    
+    `mkdir -p #{target.end_with?("/") ? target : File.dirname(target)}` if create_target_dir
+    
     if on_localhost?
       `cp -a #{src} #{target}`
     else
