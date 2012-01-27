@@ -1,0 +1,6 @@
+
+  - Fix nicer emails for report and errors
+  - Add a stdout/stderr log to a file on the server to be able to debug problems
+  - Add localhost detection, that means detect if a domain is actually localhost so that things like downloading
+    doesn't have the strange effect of over writing the file its downloading.
+  
