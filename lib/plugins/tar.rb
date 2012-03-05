@@ -26,6 +26,8 @@ module BackupPlugins
         puts "\n\tRemoving backup dir" 
         puts run_cmd "rm -rf #{backup_target_dir}" 
       end
+      
+      set_backup_size(tar_gz_path)
     end
     
     private 

@@ -156,45 +156,84 @@ class Keepitsafe
   end
   
   def check_disk_left limit = 1000
-    disk_free_on_root = run_cmd('df -ha').match(/^(.*)\/$/)[0].scan(/([0-9MG\.%]{2,10})/)[2].join("")
-    if disk_free_on_root.match(/g$/i)
-      disk_free_on_root = disk_free_on_root.match(/(\d*)/)[1].to_i * 1000 
-    elsif disk_free_on_root.match(/t$/i)
-      disk_free_on_root = disk_free_on_root.match(/(\d*)/)[1].to_i * 1000 * 1000
-    end
     
-    raise "root disk limit reached limit:#{limit} disk_free_on_root:#{disk_free_on_root}" if disk_free_on_root < limit
+    free = free_disk_space
     
+    raise "root disk limit reached limit:#{limit} disk_free_on_root:#{free}" if free < limit
   end
+  
+  
   
   def on_localhost?
     @server_domain == "localhost"
   end
   
+  attr_accessor :start_time, :end_time, :log_buffer, :error, :free_before, :free_after, :backup_size
+  
+  def set_backup_size remote_path
+    
+    raw = run_cmd("du -hc #{remote_path}").gsub("\n",' ').gsub("\t",' ').strip.match(/([0-9kmgt.]{2,10})\s*total/i)[1]
+    @backup_size = raw_to_meg(raw)
+  end
+  
   private 
+  
+  def create_backups_dir
+     puts run_cmd "mkdir -p ~/backups/"
+  end
+  
+  def free_disk_space
+    disk_free_on_root = run_cmd('df -ha ~/backups/').scan(/([0-9MGT\.%]{2,10})/)[2].join("")
+    
+    disk_free_on_root = raw_to_meg(disk_free_on_root)
+    
+    disk_free_on_root.to_i
+  end
+  
+  def raw_to_meg raw
+    if raw.match(/t$/i)
+      raw = raw.match(/(\d*)/)[1].to_f * 1000 * 1000
+    elsif raw.match(/g$/i)
+      raw = raw.match(/(\d*)/)[1].to_f * 1000 
+    elsif raw.match(/k$/i)
+      raw = raw.match(/(\d*)/)[1].to_f / 1000
+    else
+      raw = raw.match(/(\d*)/)[1].to_i
+    end
+  end
   
   def do_the_stuff
     @log_buffer = StringIO.new
   
-    STDCapture.capture(@log_buffer) do 
-      begin
+    @start_time = Time.now
+    create_backups_dir
+    @free_before = free_disk_space
+    trigger('before_backup')
+  
+    begin
+      STDCapture.capture(@log_buffer) do     
+          check_disk_left
+          create_backup_target_dir
+          create_pending_file
         
-        check_disk_left
-        create_backup_target_dir
-        create_pending_file
-        
-        yield self
+          yield self
       
-        remove_pending_file
-      rescue StandardError => e
-        puts e.inspect
-        puts e.backtrace
-      
-        trigger('on_error',{:error => e})
+          remove_pending_file
       end
+    rescue StandardError => e
+      @error = e
+      puts e.inspect
+      puts e.backtrace
+    
+      trigger('on_error',{:error => e})
     end
     
     upload_log
+    
+    @end_time = Time.now
+    @free_after = free_disk_space
+    set_backup_size(backup_target_dir) unless @backup_size
+    trigger('after_backup')
   end
   
 end

@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Email report</title>
+  
+  </head>
+  <body style="font-family: Arial; color: #aaa; font-size: 16px;">
+    
+    
+    <center>
+      <table cellpadding="0" cellspacing="0" style="width: 600px; margin: 0px 0px; border: solid 1px #eee; text-align: left;" width=600>
+        <tr>
+          <td>
+            <div class="header" style="background: #7db725; color: white;">
+              <h1 style="padding: 15px; margin: 0px;">Keepitsafe backup report</h1>
+            </div>
+          
+            <table cellpadding="0" cellspacing="0" style="width: 560px; color: black; margin: 20px;">
+              <tr>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Started</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Run time</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Backups</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Errors</td>
+              </tr>
+              <tr>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= start_time.strftime('%Y-%m-%d %H:%M') %></td>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= ((end_time - start_time) / 60).to_i %>m <%= ((end_time - start_time) % 60).to_i %>s</td>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backups.count %></td>
+                <td style="background: #eee; color: red; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backups.select {|b| !b.error.nil? }.count %></td>
+              </tr>
+            </table>
+            
+            <table cellpadding="0" cellspacing="0" style="width: 560px; color: black; margin: 20px;">
+              <tr>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Domain</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Result</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;" >Size</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;"> Time</td>
+                <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;" >Space left</td>
+              </tr>
+              
+              
+              <% backups.each do |backup| %>
+                
+              <tr>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.domain %></td>
+                <td style="background: #eee; color: <%= backup.error.nil? ? "green" : "red"%>; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.error.nil? ? "Ok" : "Error"%></td>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.backup_size %> mb</td>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= ((backup.end_time - backup.start_time) / 60).to_i %>m <%= ((backup.end_time - backup.start_time) % 60).to_i %>s</td>
+                <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.free_after %> mb</td>
+              </tr>
+                
+              <% end %>
+              
+            </table>
+            
+            
+            
+            <% backups.each do |backup| %>
+            
+              <table cellpadding="0" cellspacing="0" style="width: 560px; color: black; margin: 20px;">
+                <tr>
+                  <td colspan="4" style="background: #7db725; font-size: 20px; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">
+                    <%= backup.domain %>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">Result</td>
+                  <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;" >Size</td>
+                  <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;"> Time</td>
+                  <td style="background: #698661; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;" >Space left</td>
+                </tr>
+                <tr>
+                  <td style="background: #eee; color: <%= backup.error.nil? ? "green" : "red"%>; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.error.nil? ? "Ok" : "Error"%></td>
+                  <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.backup_size %> mb</td>
+                  <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= ((backup.end_time - backup.start_time) / 60).to_i %>m <%= ((backup.end_time - backup.start_time) % 60).to_i %>s</td>
+                  <td style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white;"><%= backup.free_after %> mb</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="background: #A2AC50; color: white; padding: 10px 0px 10px 10px; border: solid 1px white; border-top: solid 4px white; border-bottom: solid 0px white;">
+                    <h1 style="font-size: 13px; margin: 0px;">Output log</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white; border-top: 0px;">
+                    <pre style="font-size: 10px; overflow: scroll; width: 500px; padding: 20px;"><%= backup.log_buffer.string %></pre>
+                  </td>
+                </tr>
+              </table>
+            
+            <% end %>
+          
+            <div class="footer" style="background: #5b5f37; color: white; padding: 15px; padding-bottom: 50px; margin-top: 50px;">
+              <p style="margin: 0px; font-size: 13px;">
+                Backup done using <a style="color: white;" href="https://github.com/bjornblomqvist/keepitsafe">Keepitsafe</a>.
+                Contribute by forking and sending a pull request or opening an issue on github. A nicer email design is also welcomed!
+              </p>
+            </div>
+          </td>
+        <tr>
+      </table>
+    </center>
+  
+  </body>
+</html>
+
