@@ -7,22 +7,14 @@ class ErrorMail
     
     Keepitsafe.on_error do |backup,options|
 
-      mail = Mail.new
+      mail = MailBuilder.new("#{File.dirname(__FILE__)}/../email/error").build({:backup => backup})
       mail.from from
       mail.to to
-      mail.subject 'Backup error!'
-      mail.body    %@
-
-       Backup problems when backing up: #{backup.domain}
-       We are runnig on: #{Socket.gethostname}
-
-       #{options[:error].inspect}   
-       #{options[:error].backtrace}@
-
+      mail.subject "[#{backup.domain}] Backup ERROR!"
       mail.delivery_method.settings = mail.delivery_method.settings.merge(mail_options)
       mail.deliver!
 
-      puts "Error has been mailed to #{mail.to}!"
+      puts "\nError has been mailed to #{mail.to}!"
     end
     
   end

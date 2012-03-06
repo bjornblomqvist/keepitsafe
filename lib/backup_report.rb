@@ -22,11 +22,11 @@ class BackupReport
     mail = MailBuilder.new("#{File.dirname(__FILE__)}/../email/report").build({:backups => backups, :start_time => start_time, :end_time => end_time})
     mail.to to
     mail.from from
-    mail.subject "Backup report"
+    mail.subject "Backup report: #{backups.select {|b| b.error != nil}.count} Error"
     mail.delivery_method.settings = mail.delivery_method.settings.merge(mail_options)
     mail.deliver!
     
-    puts "Sent backup report to: #{to}"
+    puts "\nSent backup report to: #{to}"
     
   end
   

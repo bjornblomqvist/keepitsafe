@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Error</title>
+  
+  </head>
+  <body style="font-family: Arial; color: #aaa; font-size: 16px;">
+    
+    
+    <center>
+      <table cellpadding="0" cellspacing="0" style="width: 600px; margin: 0px 0px; border: solid 1px #eee; text-align: left;" width=600>
+        <tr>
+          <td>
+            <div class="header" style="background: #7db725; color: white;">
+              <h1 style="padding: 15px; margin: 0px;">Keepitsafe <span style="color: red;">ERROR!<span></h1>
+            </div>
+          
+            <table cellpadding="0" cellspacing="0" style="width: 560px; color: black; margin: 20px;">
+              <tr>
+                <td colspan="4" style="background: #7db725; font-size: 20px; color: white; padding: 10px 0px 10px 10px; border: solid 1px white;">
+                  <%= backup.domain %>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4" style="background: #A2AC50; color: white; padding: 10px 0px 10px 10px; border: solid 1px white; border-top: solid 4px white; border-bottom: solid 0px white;">
+                  <h1 style="font-size: 13px; margin: 0px;">Output log</h1>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4" style="background: #eee; color: black; padding: 10px 0px 10px 10px; border: solid 1px white; border-top: 0px;">
+                  <pre style="font-size: 10px; overflow: scroll; width: 500px; padding: 20px;"><%= backup.log_buffer.string %></pre>
+                </td>
+              </tr>
+            </table>
+          
+            <div class="footer" style="background: #5b5f37; color: white; padding: 15px; padding-bottom: 50px; margin-top: 50px;">
+              <p style="margin: 0px; font-size: 13px;">
+                Backup done using <a style="color: white;" href="https://github.com/bjornblomqvist/keepitsafe">Keepitsafe</a>.
+                Contribute by forking and sending a pull request or opening an issue on github. A nicer email design is also welcomed!
+              </p>
+            </div>
+          </td>
+        <tr>
+      </table>
+    </center>
+  
+  </body>
+</html>
+
