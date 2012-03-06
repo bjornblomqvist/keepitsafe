@@ -224,6 +224,9 @@ class Keepitsafe
       @error = e
       puts e.inspect
       puts e.backtrace
+      
+      @log_buffer.puts e.inspect
+      @log_buffer.puts e.backtrace
     
       trigger('on_error',{:error => e})
     end
