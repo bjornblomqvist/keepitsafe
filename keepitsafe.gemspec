@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Darwin"]
-  s.date = "2012-03-06"
+  s.date = "2012-04-14"
   s.description = "A Gem for simple creation of backup scripts"
   s.email = "darwin.git@marianna.se"
   s.extra_rdoc_files = [
@@ -53,7 +53,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/bjornblomqvist/keepitsafe"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.21"
   s.summary = "A Gem for simple creation of backup scripts"
 
   if s.respond_to? :specification_version then
