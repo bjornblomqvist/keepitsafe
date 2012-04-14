@@ -206,12 +206,13 @@ class Keepitsafe
     @log_buffer = StringIO.new
   
     @start_time = Time.now
-    create_backups_dir
-    @free_before = free_disk_space
-    trigger('before_backup')
-  
     begin
       STDCapture.capture(@log_buffer) do     
+        
+          create_backups_dir
+          @free_before = free_disk_space
+          trigger('before_backup')
+        
           check_disk_left
           create_backup_target_dir
           create_pending_file
@@ -219,6 +220,13 @@ class Keepitsafe
           yield self
       
           remove_pending_file
+          
+          upload_log
+
+          @end_time = Time.now
+          @free_after = free_disk_space
+          set_backup_size(backup_target_dir) unless @backup_size
+          trigger('after_backup')
       end
     rescue StandardError => e
       @error = e
@@ -232,13 +240,6 @@ class Keepitsafe
     
       trigger('on_error',{:error => e})
     end
-    
-    upload_log
-    
-    @end_time = Time.now
-    @free_after = free_disk_space
-    set_backup_size(backup_target_dir) unless @backup_size
-    trigger('after_backup')
   end
   
 end
