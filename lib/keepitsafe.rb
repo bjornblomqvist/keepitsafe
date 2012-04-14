@@ -172,7 +172,7 @@ class Keepitsafe
   
   def set_backup_size remote_path
     
-    raw = run_cmd("du -hc #{remote_path}").gsub("\n",' ').gsub("\t",' ').strip.match(/([0-9kmgt.]{2,10})\s*total/i)[1]
+    raw = (run_cmd("du -hc #{remote_path}").gsub("\n",' ').gsub("\t",' ').strip.match(/([0-9kmgt.]{2,10})\s*total/i) || [0])[1]
     @backup_size = raw_to_meg(raw)
   end
   
@@ -222,9 +222,11 @@ class Keepitsafe
       end
     rescue StandardError => e
       @error = e
+      puts e.message
       puts e.inspect
       puts e.backtrace
       
+      @log_buffer.puts e.message
       @log_buffer.puts e.inspect
       @log_buffer.puts e.backtrace
     
