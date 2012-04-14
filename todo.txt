@@ -1,4 +1,16 @@
       
+  - Include ip number in report    
+  
+  - Change to a per server model that uploads to another main repo.
+  
+  - Write a report with each backup
+  
+  - Create email reports from the saved to disk reports.
+  
+  - Add command line tools
+  
+  - Add server 2 server move of backups, both pull and push
+      
   - Add a stdout/stderr log to a file on the server to be able to debug problems
   - Add localhost detection, that means detect if a domain is actually localhost so that things like downloading
     doesn't have the strange effect of over writing the file its downloading.
